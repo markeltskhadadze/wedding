@@ -1,0 +1,112 @@
+{
+  "header": {
+    "sign_in": "Log In",
+    "home_nav": "Home",
+    "blog_nav": "Blog",
+    "event_nav": "Event",
+    "favorites_nav": "Favorites",
+    "vendor_nav": "Vendors",
+    "profile": "Profile"
+  },
+  "footer": {
+    "your_business": "Are you a business owner?",
+    "why_we": "Why Talklife?",
+    "social": "Social media"
+  },
+  "profile_user": {
+    "business": "Business",
+    "settings_menu": "Settings",
+    "reviews_menu": "My reviews",
+    "favorites_menu": "Favorites",
+    "exit_menu": "Exit",
+    "add_business": "Biznes qo'shish"
+  },
+  "register_modal": {
+    "modal_welcome": "Welcome to talklife!",
+    "sms_code_welcome": "Enter your phone number and receive an SMS code",
+    "send_btn_welcome": "Send",
+    "auth_question": "Don't have an account yet?",
+    "registration": "Register",
+    "enter_code_modal": "confirmation code",
+    "back_modal": "Back",
+    "send_code": "Code sent to number",
+    "check_number": "Check",
+    "select_profile": "Choose",
+    "enter_name": "Enter your name",
+    "required_field": "Obligatory field",
+    "enter_title": "Enter the title",
+    "make_account": "Create",
+    "sing_in_profile": "Go to Profile"
+  },
+  "search": {
+    "search_btn": "Search",
+    "vendors_category": "Vendors",
+    "category": "Categories"
+  },
+  "blog": {
+    "see_more": "View all",
+    "see_more_mobile": "All"
+  },
+  "download_app": {
+    "title": "Even more convenient through the mobile application!",
+    "download_text": "Download via Play Market or App Store!"
+  },
+  "top_for_month": "Top for the month",
+  "add_events": {
+    "modal_title": "Add event",
+    "modal_title_step_2": "Add tasks",
+    "modal_desc": "Please fill out the details completely!",
+    "event_name": "event title",
+    "event_task": "Write a task",
+    "select_vendors": "Select Vendors",
+    "vendor_is_empty": "Vendor has not yet been selected",
+    "note": "Space for notes",
+    "create": "Create"
+  },
+  "my_task": {
+    "tasks": "Tasks",
+    "completely_task": "Finished task"
+  },
+  "log_out_modal": {
+    "exit": "Exit",
+    "question": "Are you sure you want to log out of your profile?",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "filter": {
+    "category": "Category",
+    "title": "Filter",
+    "price": "Price",
+    "people": "Number of persons",
+    "min_price": "From:",
+    "max_price": "Before:",
+    "rating": "Ratings",
+    "location_search": "Search by location",
+    "update": "Update"
+  },
+  "business": {
+    "add_image": "Фото/Видео",
+    "size_image": "(Размер фото 1x1)",
+    "size_video": "Видео (Лимит 100 мб)",
+    "business_info": "Информация о бизнесе",
+    "business_name": "Введите название бизнес*",
+    "required_field": "Обязательное поле",
+    "type": "Выберите тип бизнеса*",
+    "description": "Описание*",
+    "phone_number": "Номер телефона*",
+    "add_number": "Добавить еще",
+    "contact_info": "Контактная информация",
+    "region": "Регион*",
+    "city": "Город*",
+    "address": "Адрес *",
+    "location": "Укажите местоположение из геолокации *",
+    "social_media": "Социальные сети",
+    "cancel": "Отмена",
+    "create": "Создание",
+    "save": "Сохранить",
+    "in_site": "На сайте",
+    "waiting": "Ожидание",
+    "is_empty": "Пустой",
+    "empty_container": "Пока на сайте нет объявлений"
+  }
+}

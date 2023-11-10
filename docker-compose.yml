@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  nginx:
+    hostname: frontend-nginx
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - VUE_APP_API_URL=$VUE_APP_API_URL
+    ports:
+      - 3000:80

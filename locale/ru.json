@@ -1,0 +1,87 @@
+{
+  "header": {
+    "sign_in": "Войти",
+    "home_nav": "Главная",
+    "blog_nav": "Блог",
+    "event_nav": "Ивент",
+    "favorites_nav": "Избранное",
+    "vendor_nav": "Вендоры",
+    "profile": "Профиль"
+  },
+  "footer": {
+    "your_business": "Вы владетель бизнеса?",
+    "why_we": "Почему Talklif?",
+    "social": "Социальные сети"
+  },
+  "profile_user": {
+    "business": "Бизнесс",
+    "settings_menu": "Настройки",
+    "reviews_menu": "Мои отзывы",
+    "favorites_menu": "Избранное",
+    "exit_menu": "Выход",
+    "add_business": "Добавить бизнесс"
+  },
+  "register_modal": {
+    "modal_welcome": "Добро пожаловать в talklif!",
+    "sms_code_welcome": "Введите свой номер телефона и получите SMS код",
+    "send_btn_welcome": "Отправить",
+    "auth_question": "Нет еще аккаунта?",
+    "registration": "Зарегистрироваться",
+    "enter_code_modal": "Код подтверждения",
+    "back_modal": "Назад",
+    "send_code": "Код отправлен на номер",
+    "check_number": "Проверить",
+    "select_profile": "Выбрать",
+    "enter_name": "Введите имя",
+    "required_field": "Обязательное поле",
+    "enter_title": "Введите название",
+    "make_account": "Создать",
+    "sing_in_profile": "Зайти в Профиль"
+  },
+  "search": {
+    "search_btn": "Поиск",
+    "vendors_category": "Вендоры",
+    "category": "Категории"
+  },
+  "blog": {
+    "see_more": "Посмотреть все",
+    "see_more_mobile": "Все"
+  },
+  "download_app": {
+    "title": "Еще удобнее через мобильное приложение!",
+    "download_text": "Скачать через Play Market или App Store!"
+  },
+  "top_for_month": "Топ за месяц",
+  "add_events": {
+    "modal_title": "Добавить ивент",
+    "modal_title_step_2": "Добавить задачи",
+    "modal_desc": "Пожалуйста, заполните данные полностью!",
+    "event_name": "Название мероприятия",
+    "event_task": "Напишите задачу",
+    "select_vendors": "Выберите Вендоров",
+    "vendor_is_empty": "Вендор пока не выбран",
+    "note": "Место для заметок",
+    "create": "Создать"
+  },
+  "my_task": {
+    "tasks": "Задачи",
+    "completely_task": "Готовая задача"
+  },
+  "log_out_modal": {
+    "exit": "Выход",
+    "question": "Вы действительно хотите выйти из своего профиля?",
+    "yes": "Да",
+    "no": "Нет"
+  },
+  "filter": {
+    "category": "Категория",
+    "title": "Фильтр",
+    "price": "Цена",
+    "people": "Количество человек",
+    "min_price": "От:",
+    "max_price": "До:",
+    "rating": "Рейтинги",
+    "location_search": "Поиск по местоположению",
+    "update": "Обновить"
+  }
+}

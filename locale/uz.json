@@ -1,0 +1,86 @@
+{
+  "header": {
+    "sign_in": "Kirish uchun",
+    "home_nav": "Uy",
+    "blog_nav": "Blog",
+    "event_nav": "Tadbir",
+    "favorites_nav": "Sevimlilar",
+    "vendor_nav": "Sotuvchilar",
+    "profile": "Profil"
+  },
+  "footer": {
+    "your_business": "Siz biznes egasimisiz?",
+    "why_we": "Nima uchun Talklife?",
+    "social": "Ijtimoiy tarmoqlar"
+  },
+  "profile_user": {
+    "business": "Biznes",
+    "settings_menu": "Sozlamalar",
+    "reviews_menu": "Mening sharhlarim",
+    "favorites_menu": "Sevimlilar",
+    "exit_menu": "Chiqish"
+  },
+  "register_modal": {
+    "modal_welcome": "Talklifega xush kelibsiz!",
+    "sms_code_welcome": "Telefon raqamingizni kiriting va SMS kodini oling",
+    "send_btn_welcome": "Yuborish",
+    "auth_question": "Hali hisobingiz yo'qmi?",
+    "registration": "Roʻyxatdan oʻtish",
+    "enter_code_modal": "Tasdiqlash kodi",
+    "back_modal": "Orqaga",
+    "send_code": "Raqamga kod yuborildi",
+    "check_number": "Tekshirish",
+    "select_profile": "Tanlang",
+    "enter_name": "Ismingizni kiriting",
+    "required_field": "Majburiy maydon",
+    "enter_title": "Sarlavhani kiriting",
+    "make_account": "Yaratmoq",
+    "sing_in_profile": "Profilga o'ting"
+  },
+  "search": {
+    "search_btn": "Qidirmoq",
+    "vendors_category": "Sotuvchilar",
+    "category": "Kategoriyalar"
+  },
+  "blog": {
+    "see_more": "Hammasini ko'rish",
+    "see_more_mobile": "Hammasi"
+  },
+  "download_app": {
+    "title": "Mobil ilova orqali yanada qulayroq!",
+    "download_text": "Play Market yoki App Store orqali yuklab oling!"
+  },
+  "top_for_month": "Oy uchun eng yuqori",
+  "add_events": {
+    "modal_title": "Tadbir qo'shish",
+    "modal_title_step_2": "Vazifalarni qo'shish",
+    "modal_desc": "Iltimos, ma'lumotlarni to'liq to'ldiring!",
+    "event_name": "voqea sarlavhasi",
+    "event_task": "Vazifa yozing",
+    "select_vendors": "Sotuvchilarni tanlang",
+    "vendor_is_empty": "Sotuvchi hali tanlanmagan",
+    "note": "Eslatmalar uchun joy",
+    "create": "Yaratmoq"
+  },
+  "my_task": {
+    "tasks": "Vazifalar",
+    "completely_task": "Tugallangan vazifa"
+  },
+  "log_out_modal": {
+    "exit": "Chiqish",
+    "question": "Haqiqatan ham profilingizdan chiqmoqchimisiz?",
+    "yes": "Ha",
+    "no": "Yo'q"
+  },
+  "filter": {
+    "category": "Turkum",
+    "title": "Filtr",
+    "price": "Narxi",
+    "people": "Shaxslar soni",
+    "min_price": "Kimdan:",
+    "max_price": "Oldin:",
+    "rating": "Reytinglar",
+    "location_search": "Joylashuv bo'yicha qidirish",
+    "update": "Yangilash"
+  }
+}
