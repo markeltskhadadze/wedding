@@ -1,12 +1,11 @@
 import {Ref, ref, reactive, toRaw} from 'vue'
 import { defineStore } from 'pinia'
 import { getHeader } from '~/mixins/header'
-import {TImageId, TReviews, TReviewsResult, TUser, TUserUpdateData} from '~/types'
+import {TImageId, TReviews, TReviewsResult, TProfile, TUserUpdateData} from '~/types'
 import { authInfo } from '~/stores/auth'
 import { homePageData } from "~/stores/home-page"
 
 export const profileData = defineStore('profileData', () => {
-    // variables
     const auth = authInfo()
     const home = homePageData()
     const openExitModal: Ref<boolean> = ref(false)
@@ -17,16 +16,10 @@ export const profileData = defineStore('profileData', () => {
     let reviews = reactive<TReviewsResult[]>([])
     const currentCategory: Ref<string> = ref('Настройки')
     const { headersConfig } = getHeader.setup()
-    let profileInfo = ref<TUser>({
-            id: 0,
-            phone_number: '',
-            full_name: '',
-            profile_image: {
-                file: '',
-                id: 0
-            },
-            date_joined: '',
-            user_type: '',
+    let profileInfo = ref<TProfile>({
+            _id: '',
+            name: '',
+            user_type: ''
         }
     )
     let businessPhoneNumber: Ref<string> = ref('')
@@ -37,52 +30,31 @@ export const profileData = defineStore('profileData', () => {
 
     async function getProfileInfo() {
         try {
-            const response = await $fetch<TUser>( 'https://api.talklif.uz/v1/account/user/my_profile/', {
+            const response = await $fetch<TProfile>( 'https://node-and-mongo-project.herokuapp.com/api/profile', {
                 method: 'GET',
                 headers: {
-                    Authorization: "Bearer " + auth.token,
-                    'Accept-Language': home.currentLang
+                    Authorization: auth.token
                 }
             })
-            if (response.profile_image) {
-                profileInfo.value = {
-                    id: response.id,
-                    phone_number: response.phone_number,
-                    full_name: response.full_name,
-                    profile_image: {
-                        file: response.profile_image.file,
-                        id: response.profile_image.id
-                    },
-                    date_joined: response.date_joined,
-                    user_type: response.user_type
-                }
-            } else {
-                profileInfo.value = {
-                    id: response.id,
-                    phone_number: response.phone_number,
-                    full_name: response.full_name,
-                    date_joined: response.date_joined,
-                    user_type: response.user_type
-                }
+            profileInfo.value = {
+                _id: response._id,
+                name: response.name,
+                user_type: response.user_type
             }
         } catch (e) {
             console.log(e)
         }
     }
 
-    async function saveUserData(fullName: string | null) {
+    async function saveUserData(userInfo: TProfile) {
         try {
-            const userData: TUserUpdateData = {}
-            if (fullName) userData.full_name = fullName
-            if (profileAvatarId.value) userData.profile_image = profileAvatarId.value
-            await $fetch( 'https://api.talklif.uz/v1/account/user/update_profile/', {
-                method: 'PUT',
+            await $fetch( `https://node-and-mongo-project.herokuapp.com/api/update/${userInfo._id}`, {
+                method: 'POST',
                 headers: {
-                    Authorization: "Bearer " + auth.token,
+                    Authorization: auth.token,
                 },
-                body: userData
+                body: userInfo
             })
-            home.showNotification = true
         } catch (e) {
             console.log(e)
         }

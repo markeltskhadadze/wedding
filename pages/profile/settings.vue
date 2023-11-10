@@ -44,7 +44,7 @@
       <div class="flex flex-col items-center">
         <img v-if="profile.profileInfo.profile_image" :src="profile.profileInfo.profile_image.file" class="user-img" />
         <img v-if="!profile.profileInfo.profile_image" :src="getIcon + 'default-avatar.png'" class="user-img" />
-        <p class="user-name">{{ profile.profileInfo.full_name }}</p>
+        <p class="user-name">{{ profile.profileInfo.name }}</p>
       </div>
       <hr style="width: 100%"/>
       <div class="options">
@@ -75,7 +75,7 @@
       <div class="flex flex-col items-center">
         <img v-if="profile.profileInfo.profile_image" :src="profile.profileInfo.profile_image.file" class="user-img" />
         <img v-if="!profile.profileInfo.profile_image" :src="getIcon + 'default-avatar.png'" class="user-img" />
-        <p class="user-name">{{ profile.profileInfo.full_name }}</p>
+        <p class="user-name">{{ profile.profileInfo.name }}</p>
       </div>
       <hr style="width: 100%"/>
       <div class="options">
@@ -121,16 +121,16 @@
         <hr style="width: 100%"/>
         <div class="flex justify-start gap-8" :class="{ 'flex-col': !checkScreen, 'flex-wrap': checkScreen }">
           <div class="flex flex-col items-start gap-2 flex-[0_1_45%]">
-            <p class="lable-name">Имя Фамилия</p>
-            <input v-model="profile.profileInfo.full_name" class="profile-input" type="text" />
+            <p class="lable-name">Имя</p>
+            <input v-model="profile.profileInfo.name" class="profile-input" type="text" />
           </div>
-          <div class="flex flex-col items-start gap-2 flex-[0_1_45%]">
-            <p class="lable-name">Номер телефона</p>
-            <input class="profile-input" v-maska data-maska="+998 ##-###-##-##" v-model="profile.profileInfo.phone_number" />
-          </div>
+<!--          <div class="flex flex-col items-start gap-2 flex-[0_1_45%]">-->
+<!--            <p class="lable-name">Номер телефона</p>-->
+<!--            <input class="profile-input" v-maska data-maska="+998 ##-###-##-##" v-model="profile.profileInfo.phone_number" />-->
+<!--          </div>-->
         </div>
         <div class="flex" :class="{ 'justify-end': checkScreen, 'justify-start': !checkScreen }">
-          <button class="save-btn" @click="profile.saveUserData(profile.profileInfo.full_name)">Сохранить</button>
+          <button class="save-btn" @click="profile.saveUserData(profile.profileInfo)">Сохранить</button>
         </div>
       </div>
     </div>

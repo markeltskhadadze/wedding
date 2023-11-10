@@ -1,10 +1,11 @@
-import { Ref, ref } from 'vue'
-import { defineStore } from 'pinia'
-import { TUser } from '~/types'
+    import { Ref, ref } from 'vue'
+    import { defineStore } from 'pinia'
 
 export const headerData = defineStore('headerData', () => {
     let open: Ref<boolean> = ref(false)
     let phoneNumber: Ref<string> = ref('')
+    let userName: Ref<string> = ref('')
+    let userPassword: Ref<string> = ref('')
     let enterSMSCode: Ref<boolean> = ref(false)
     let registration: Ref<boolean> = ref(false)
     let userProfile: Ref<boolean> = ref(false)
@@ -43,9 +44,11 @@ export const headerData = defineStore('headerData', () => {
         phoneNumber,
         enterSMSCode,
         registration,
+        userName,
         userProfile,
         companyProfile,
         userAuth,
+        userPassword,
         showUserPopUp,
         showAuthModal,
         backToAuth,

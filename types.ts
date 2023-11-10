@@ -5,6 +5,17 @@ export type TCategoties = {
     category_feature: string;
 }
 
+export type TUserData = {
+    name: string;
+    password: string;
+}
+
+export type TUserDataResult = {
+    name: string;
+    role: string;
+    token: string;
+}
+
 export type TPlaces = {
     count: number;
     next: null;
@@ -182,23 +193,17 @@ export type TAccessData = {
     refresh: string;
 }
 
-export type TUser = {
-    id: number;
-    phone_number: string;
-    full_name: string;
-    profile_image?: {
-        file: string;
-        id: number;
-    }
-    date_joined: string;
+export type TProfile = {
+    _id: string;
+    name: string;
+    password?: string;
     user_type: string;
 }
 
-export type TImageId = Pick<TUser, 'id'>
+export type TImageId = Pick<TProfile, '_id'>
 
 export type TUserUpdateData = {
-    full_name?: string,
-    profile_image?: number;
+    name?: string,
 }
 
 export type TBusinessInfo = {
