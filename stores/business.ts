@@ -70,14 +70,13 @@ export const businessInfo = defineStore('businessInfo', () => {
     const district: Ref<number> = ref(0)
     async function getUserBusiness() {
         try {
-            const response = await $fetch<TBusinessAll>( 'https://api.talklif.uz/v1/business/', {
+            const response = await $fetch<TBusinessResult[]>( 'https://node-and-mongo-project.herokuapp.com/api/user-business', {
                 method: 'GET',
                 headers: {
-                    Authorization: "Bearer " + auth.token,
-                    'Accept-Language': home.currentLang
+                    Authorization: auth.token
                 }
             })
-            if(!userBusiness.length) userBusiness.push(...response.results as TBusinessResult[])
+            if(!userBusiness.length) userBusiness.push(...response as TBusinessResult[])
             if(!readyBusiness.length) readyBusiness.push(...userBusiness.filter(business => business.status === 'active'))
             if(!waitBusiness.length) waitBusiness.push(...userBusiness.filter(business => business.status === 'in_process'))
             isLoading.value = true
@@ -89,15 +88,11 @@ export const businessInfo = defineStore('businessInfo', () => {
     }
 
     async function addNewBusiness() {
-        if(businessName.value && selectedCategory.value && selectedRegion.value) {
-            const id = toRaw(selectedCategory.value)
+        if(businessName.value) {
             try {
                 const businessData: TBusinessResult = {
                     name: businessName.value,
-                    category: id.id,
                     description: description.value,
-                    max_value: minValue.value,
-                    min_value: maxValue.value,
                     price: price.value,
                     images: []
                 }
@@ -116,17 +111,15 @@ export const businessInfo = defineStore('businessInfo', () => {
                 if(telegram) businessData.telegram = telegram.value
                 if(phoneNumber1) businessData.phone_number1 = phoneNumber1.value.replace(/[\s-]/g, '')
                 if(phoneNumber2) businessData.phone_number2 = phoneNumber2.value.replace(/[\s-]/g, '')
-                await $fetch( 'https://api.talklif.uz/v1/business/', {
+                await $fetch( 'https://node-and-mongo-project.herokuapp.com/api/add-business', {
                     method: 'POST',
                     headers: {
-                        Authorization: "Bearer " + auth.token
+                        Authorization: auth.token
                     },
                     body: businessData
                 })
                 businessNameError.value = false
-                selectedCategoryError.value = false
-                selectedRegionError.value = false
-                window.location.reload()
+                // window.location.reload()
             } catch (e) {
                 console.log(e)
             }

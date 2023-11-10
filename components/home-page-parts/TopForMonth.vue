@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { onMounted } from 'vue'
+  import { onMounted, reactive, toRaw } from 'vue'
   import { homePageData } from '~/stores/home-page'
   import { TResults } from '~/types'
   import TopPlace from '~/components/home-page-parts/parts/TopPlace.vue'

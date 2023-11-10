@@ -19,7 +19,6 @@ export const authInfo = defineStore('authInfo', () => {
     })
 
     function setToken (tokenData: string | null | undefined) {
-        console.log(tokenData)
         if (tokenData) {
             token.value = tokenData
             localStorage.setItem('token', tokenData)

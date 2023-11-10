@@ -30,8 +30,8 @@
 <template>
   <div class="place-content" :class="{ 'flex-[0_1_45%]': getURLName && !checkScreen }">
     <div class="relative image-container">
-      <img v-if="getMainImage.length" :src="getMainImage[0].image?.file" class="place-img" :class="{ 'place-img-mobile': getURLName && !checkScreen }" />
-      <img v-if="!getMainImage.length" :src="getIcon + 'place-img.png'" class="place-img" :class="{ 'place-img-mobile': getURLName && !checkScreen }" />
+<!--      <img v-if="getMainImage.length" :src="getMainImage[0].image?.file" class="place-img" :class="{ 'place-img-mobile': getURLName && !checkScreen }" />-->
+      <img :src="getIcon + 'place-img.png'" class="place-img" :class="{ 'place-img-mobile': getURLName && !checkScreen }" />
       <img v-if="!favorite.getSelectedFavorite.includes(place.id)" @click="favorite.makeFavorite(place.id)" :src="getIcon + 'like.png'" class="like-img" />
       <img v-if="favorite.getSelectedFavorite.includes(place.id)" @click="favorite.deleteFavorite(place.id)" :src="getIcon + 'favorite-icon.png'" class="like-img" />
     </div>

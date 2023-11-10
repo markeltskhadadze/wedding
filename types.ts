@@ -1,8 +1,8 @@
 export type TCategoties = {
     id: number
     name: string;
-    icon: string;
-    category_feature: string;
+    icon?: string;
+    category_feature?: string;
 }
 
 export type TUserData = {
@@ -61,16 +61,14 @@ export type TFavorites = {
 
 export type TResults = {
     id: number;
-    rate: number;
+    rate?: number;
     name: string;
-    min_value: number;
-    max_value: number;
     price: number;
     district?: {
         id: number;
         name: string;
     }
-    images: TImageBusiness[]
+    images?: TImageBusiness[]
 }
 
 export type TBusiness = {
@@ -82,10 +80,8 @@ export type TBusiness = {
 
 export type TResultsBusiness = {
     id: number;
-    rate: number;
+    rate?: number;
     name: string;
-    min_value: number;
-    max_value: number;
     price: number;
     district?: {
         id: number;
@@ -297,7 +293,6 @@ export type TBusinessAll = {
 
 export type TBusinessResult = {
     address?: string;
-    category: number;
     description: string;
     district?: number;
     facebook?: string;

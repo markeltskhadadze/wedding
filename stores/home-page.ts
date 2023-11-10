@@ -71,11 +71,8 @@ export const homePageData = defineStore('homePageData', () => {
     })
     async function getCategories( ){
         try {
-            const response = await $fetch<TCategoties[]>( 'https://api.talklif.uz/v1/public/category/', {
-                method: 'GET',
-                headers: {
-                    'Accept-Language': currentLang.value
-                }
+            const response = await $fetch<TCategoties[]>( 'https://node-and-mongo-project.herokuapp.com/api/category/', {
+                method: 'GET'
             })
             if(!categories.length) categories.push(...response)
         } catch (e) {
@@ -120,14 +117,14 @@ export const homePageData = defineStore('homePageData', () => {
                 topPlaces.splice(0, topPlaces.length)
                 topPlaces.push(...response.results as TResultsBusiness[])
             } else {
-                const response = await $fetch<TBusiness>('https://api.talklif.uz/v1/public/business/', {
+                const response = await $fetch<TResultsBusiness[]>('https://node-and-mongo-project.herokuapp.com/api/business/', {
                     method: 'GET',
                     headers: {
                         'Accept-Language': currentLang.value
                     }
                 })
                 topPlaces.splice(0, topPlaces.length)
-                topPlaces.push(...response.results as TResultsBusiness[])
+                topPlaces.push(...response as TResultsBusiness[])
             }
         } catch (e) {
             console.log(e)
