@@ -12,13 +12,12 @@
   import { authInfo } from '~/stores/auth'
   import { eventsInfo } from "~/stores/events"
   import { homePageData } from "~/stores/home-page"
-  import VOtpInput from 'vue3-otp-input'
   import { getCurrentLang } from '~/mixins/languages'
   import LangSwitcher from '~/components/home-page-parts/parts/LangSwitcher.vue'
   import { getToken } from '~/mixins/check-auth'
   import { getPath } from '~/mixins/current-url'
-  import InvitationNotification from "~/components/event-page-parts/InvitationNotification.vue";
-  import Notification from "~/components/home-page-parts/parts/Notification.vue";
+  import InvitationNotification from "~/components/event-page-parts/InvitationNotification.vue"
+  import Notification from "~/components/home-page-parts/parts/Notification.vue"
 
   const { getURLName } = urlName.setup()
   const localePath = useLocalePath()
@@ -33,69 +32,16 @@
   const event = eventsInfo()
   const { checkAuth } = getToken.setup()
   const headerVisible: Ref<boolean> = ref(true)
-  const otpInput = ref<InstanceType<typeof VOtpInput> | null>(null)
-  const bindModal = ref('')
-  const initialMinutes = 2
-  const initialSeconds = 0
-  const minutes = ref(initialMinutes)
-  const seconds = ref(initialSeconds)
-  let intervalId: ReturnType<typeof setTimeout> | undefined
 
-  const formattedTime = computed(() => {
-    const paddedMinutes = String(minutes.value).padStart(2, '0')
-    const paddedSeconds = String(seconds.value).padStart(2, '0')
-    return `${paddedMinutes}:${paddedSeconds}`
-  })
-  const startTimer = () => {
-    clearInterval(intervalId)
-    intervalId = setInterval(() => {
-      if (minutes.value === 0 && seconds.value === 0) {
-        clearInterval(intervalId)
-        return
-      } else if (!header.enterSMSCode || !header.open) {
-        clearInterval(intervalId)
-        return
-      }
-      if (seconds.value === 0) {
-        minutes.value--
-        seconds.value = 59
-      } else {
-        seconds.value--
-      }
-    }, 1000)
-  }
-  async function sendNumberForAuth() {
-    startTimer()
-    const authPhone = {
-      phone_number: header.phoneNumber
-    }
-    const registrationPhone = {
-      phone_number: header.phoneNumber,
-      user_type: header.userProfile ? 'customer' : 'vendor'
+  async function authUser() {
+    const userData = {
+      name: header.userName,
+      password: header.userPassword
     }
     header.userProfile || header.companyProfile
-        ? await auth.registrationNumber(registrationPhone)
-        : await auth.sendNumber(authPhone)
+        await auth.login(userData)
   }
 
-  async function backBtn() {
-    console.log('asdasd')
-    clearInterval(intervalId)
-    minutes.value = initialMinutes
-    seconds.value = initialSeconds
-    // await header.backToChose
-    await header.backToAuth()
-  }
-
-  async function checkCode() {
-    const smsCodeData = {
-      phone_number: header.phoneNumber,
-      sms_code: bindModal.value
-    }
-    header.userProfile || header.companyProfile
-        ? await auth.registrationCheckSMS(smsCodeData)
-        : await auth.checkSMS(smsCodeData)
-  }
   watch(() => header.open, (newOpen) => {
     if (!newOpen) {
       header.phoneNumber = ''
@@ -148,7 +94,7 @@
       >
         <img v-if="profile.profileInfo.profile_image" :src="profile.profileInfo.profile_image.file" class="user-img" />
         <img v-if="!profile.profileInfo.profile_image" :src="getIcon + 'default-avatar.png'" class="user-img" />
-        <p>{{ profile.profileInfo.full_name }}</p>
+        <p>{{ profile.profileInfo.name }}</p>
         <div v-if="header.showUserPopUp" class="user-popup">
           <div class="options" v-if="profile.profileInfo.user_type === 'vendor'">
             <img v-if="!isBusinessActive" :src="getIcon + 'business-icon.png'" />
@@ -225,9 +171,12 @@
                       </div>
                     </div>
                     <div class="send-form">
-                      <input type="text" v-model="header.phoneNumber" placeholder="+998" v-maska data-maska="+998 ##-###-##-##" />
+                      <input type="text" v-model="header.userName" placeholder="Введите имя" />
                     </div>
-                    <button @click="sendNumberForAuth" class="submit-btn">{{ $t('register_modal.send_btn_welcome') }}</button>
+                    <div class="send-form">
+                      <input type="password" v-model="header.userPassword" placeholder="Введите пароль" />
+                    </div>
+                    <button @click="authUser" class="submit-btn">{{ $t('register_modal.send_btn_welcome') }}</button>
                     <div v-if="!header.userProfile && !header.companyProfile" class="flex justify-between auth-footer-link">
                       <p class="make-account">{{ $t('register_modal.auth_question') }}</p>
                       <p class="register-account" @click="header.registration = !header.registration">{{ $t('register_modal.registration') }}</p>
@@ -236,38 +185,6 @@
                       <div class="flex gap-1">
                         <img :src="getIcon + 'back.png'" />
                         <p @click="header.backToChose" class="back-to-auth">{{ $t('register_modal.back_modal') }}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                      v-if="header.enterSMSCode"
-                       class="flex flex-col gap-16 items-center justify-center flex-[0_1_50%]"
-                  >
-                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                      <DialogTitle as="h3" class="auth-title">{{ $t('register_modal.enter_code_modal') }}</DialogTitle>
-                      <div class="mt-2">
-                        <p class="enter-phone-text">{{ $t('register_modal.send_code') }} {{ header.phoneNumber }}</p>
-                        <p class="timeout">{{ formattedTime }}</p>
-                      </div>
-                    </div>
-                    <div class="enter-code">
-                      <v-otp-input
-                          ref="otpInput"
-                          v-model:value="bindModal"
-                          input-classes="otp-input"
-                          separator=""
-                          :num-inputs="4"
-                          :should-auto-focus="true"
-                          input-type="letter-numeric"
-                          :conditionalClass="['one', 'two', 'three', 'four']"
-                          :placeholder="['', '', '', '']"
-                      />
-                    </div>
-                    <button class="submit-btn" @click="checkCode">{{ $t('register_modal.check_number') }}</button>
-                    <div v-if="header.userProfile || header.enterSMSCode" class="flex justify-between auth-footer-link">
-                      <div class="flex gap-1">
-                        <img :src="getIcon + 'back.png'" />
-                        <p @click="backBtn" class="back-to-auth">{{ $t('register_modal.back_modal') }}</p>
                       </div>
                     </div>
                   </div>
