@@ -1,9 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // @ts-ignore
-  experimental: {
-    inlineSSRStyles: false
-  },
   devtools: { enabled: true },
   modules: [
     '@nuxtjs/tailwindcss',
