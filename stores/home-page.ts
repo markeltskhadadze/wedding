@@ -32,7 +32,7 @@ export const homePageData = defineStore('homePageData', () => {
     const businessByCategory = reactive<TResults[]>([])
     const apiKey = 'AIzaSyBxWwsmISHb_3CokPL0N5hoyQWT-moRB_4'
     let businessInfo = ref<TBusinessInfo>({
-            id: 0,
+            _id: '',
             name: '',
             price: 0,
             rate: 0,
@@ -185,27 +185,28 @@ export const homePageData = defineStore('homePageData', () => {
     }
     async function getBusinessInfo(id: string){
         try {
-            const response = await $fetch<TBusinessInfo>( `https://api.talklif.uz/v1/public/business/${id}`, {
+            const response = await $fetch<TBusinessInfo[]>( `https://node-and-mongo-project.herokuapp.com/api/business/${id}`, {
                 method: 'GET',
                 headers: {
                     'Accept-Language': currentLang.value
                 }
             })
+            console.log(response[0])
             businessInfo.value = {
-                id: response.id,
-                rate: response.rate,
-                name: response.name,
-                price: response.price,
-                description: response.description,
-                phone_number1: response.phone_number1,
-                phone_number2: response.phone_number2,
-                telegram: response.telegram,
-                address: response.address,
-                facebook: response.facebook,
-                instagram: response.instagram,
-                latitude: response.latitude,
-                longitude: response.longitude,
-                images: response.images
+                id: response[0]._id,
+                rate: response[0].rate,
+                name: response[0].name,
+                price: response[0].price,
+                description: response[0].description,
+                phone_number1: response[0].phone_number1,
+                phone_number2: response[0].phone_number2,
+                telegram: response[0].telegram,
+                address: response[0].address,
+                facebook: response[0].facebook,
+                instagram: response[0].instagram,
+                latitude: response[0].latitude,
+                longitude: response[0].longitude,
+                images: response[0].images
             }
             getGoogleMaps()
         } catch (e) {
