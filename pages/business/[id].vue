@@ -74,9 +74,9 @@
           <p v-if="checkScreen">Поделиться</p>
         </div>
         <div class="flex items-center gap-4">
-          <img v-if="!favorite.getSelectedFavorite.includes(homeData.businessInfo.id)" @click="favorite.makeFavorite(homeData.businessInfo.id)" :src="getIcon + 'icon-save.png'" class="like-img" />
-          <img v-if="favorite.getSelectedFavorite.includes(homeData.businessInfo.id)" @click="favorite.deleteFavorite(homeData.businessInfo.id)" :src="getIcon + 'favorite-icon.png'" class="like-img" />
-          <p @click="favorite.makeFavorite( homeData.businessInfo.id)" v-if="checkScreen">Сохранить</p>
+          <img v-if="!favorite.getSelectedFavorite.includes(homeData.businessInfo._id)" @click="favorite.makeFavorite(homeData.businessInfo._id)" :src="getIcon + 'icon-save.png'" class="like-img" />
+          <img v-if="favorite.getSelectedFavorite.includes(homeData.businessInfo._id)" @click="favorite.deleteFavorite(homeData.businessInfo._id)" :src="getIcon + 'favorite-icon.png'" class="like-img" />
+          <p @click="favorite.makeFavorite( homeData.businessInfo._id)" v-if="checkScreen">Сохранить</p>
         </div>
       </div>
     </div>

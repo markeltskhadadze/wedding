@@ -37,7 +37,7 @@
     </div>
     <div class="place-info">
       <div class="flex justify-between">
-        <NuxtLink class="place-name" :to="localePath(`/business/${ place.id }`)">{{ place.name }}</NuxtLink>
+        <NuxtLink class="place-name" :to="localePath(`/business/${ place._id }`)">{{ place.name }}</NuxtLink>
         <div class="flex gap-1">
           <img :src="getIcon + 'star.png'" class="place-icon" />
           <p class="rating-value">{{ place.rate }}</p>

@@ -45,7 +45,7 @@ export type TFavorites = {
     previous: null;
     results: [
         {
-            id: number;
+            _id: number;
             business: {
                 id: number;
                 rate: number;
@@ -60,7 +60,7 @@ export type TFavorites = {
 }
 
 export type TResults = {
-    id: number;
+    _id: number;
     rate?: number;
     name: string;
     price: number;
@@ -203,7 +203,7 @@ export type TUserUpdateData = {
 }
 
 export type TBusinessInfo = {
-    id: number;
+    _id: string;
     name?: string;
     rate?: number;
     rate_count?: string;
