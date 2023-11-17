@@ -30,15 +30,6 @@
   const route = useRoute()
   const router = useRouter()
 
-  function getDate(date: string) {
-    const originalDate = new Date(date)
-    const day = originalDate.getDate().toString().padStart(2, '0')
-    const month = (originalDate.getMonth() + 1).toString().padStart(2, '0')
-    const year = originalDate.getFullYear()
-
-    return `${day}.${month}.${year}`
-  }
-
   const showMoreReview = computed(() => {
     return showMore.value ? place.getAllReviews : place.getAllReviews.slice(0, 4)
   })
@@ -145,8 +136,8 @@
                 <img v-if="userInfo.user.profile_image?.file" :src="userInfo.user.profile_image.file" class="user-imgs" />
                 <div class="flex flex-col gap-2 flex-[0_1_100%]">
                   <div class="flex gap-4">
-                    <p class="user-name">{{ userInfo.user.full_name }}</p>
-                    <p class="review-date">{{ getDate(userInfo.created_at) }}</p>
+                    <p class="user-name">{{ userInfo.user.name }}</p>
+                    <p class="review-date">{{ userInfo.created_at }}</p>
                   </div>
                   <div class="flex">
                     <img v-for="index in 5" :key="index"

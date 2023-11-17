@@ -14,10 +14,6 @@
       required: true
     }
   })
-
-  function selectRating(value: number) {
-    place.newRating = value
-  }
 </script>
 
 <template>

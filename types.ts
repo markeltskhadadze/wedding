@@ -120,20 +120,14 @@ export type TFavoriteResults = {
 }
 
 export type TReviewsResult = {
-    assigned_rating: number;
+    assigned_rating: string;
     created_at: string;
     text: string;
-    user: number;
-    id: number;
-    business: {
-        id: number;
-        rate: number;
-        name: string;
-        min_value: number;
-        max_value: number;
-        price: number;
-        district: string;
-    }
+    user: {
+        name: string
+    };
+    _id?: string;
+    business: TBusinessResult;
 }
 
 export type TReviews = {
@@ -293,10 +287,10 @@ export type TBusinessAll = {
 
 export type TBusinessResult = {
     address?: string;
-    description: string;
-    district?: number;
+    description?: string;
+    district?: string;
     facebook?: string;
-    id?: number;
+    _id?: string;
     instagram?: string;
     latitude?: string;
     longitude?: string;

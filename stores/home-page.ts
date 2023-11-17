@@ -191,7 +191,6 @@ export const homePageData = defineStore('homePageData', () => {
                     'Accept-Language': currentLang.value
                 }
             })
-            console.log(response[0])
             businessInfo.value = {
                 id: response[0]._id,
                 rate: response[0].rate,
