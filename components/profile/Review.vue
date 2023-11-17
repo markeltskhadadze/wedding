@@ -15,26 +15,14 @@
       required: true
     }
   })
-
-  function getReviewDate(reviewDate: string) {
-    const date = new Date(reviewDate)
-    const months = [
-      "января", "февраля", "марта", "апреля", "мая", "июня",
-      "июля", "августа", "сентября", "октября", "ноября", "декабря"
-    ]
-    const day = date.getDate()
-    const month = months[date.getMonth()]
-    const year = date.getFullYear()
-    return `${day} ${month} ${year}`
-  }
 </script>
 
 <template>
   <div class="flex-wrap justify-between">
     <div class="flex items-center gap-8">
       <div class="flex gap-4 flex-[0_1_45%]">
-        <img v-if="!props.review.business.images.length" :src="getIcon + 'place-img.png'" class="review-img" />
-        <img v-if="props.review.business.images.length" :src="props.review.business.images[0].image.file" class="review-img" />
+        <img v-if="!props.review.business?.images" :src="getIcon + 'place-img.png'" class="review-img" />
+        <img v-if="props.review.business?.images" :src="props.review.business.images[0].image.file" class="review-img" />
         <div class="flex flex-col gap-2 justify-center">
           <div class="flex justify-between">
             <p class="place-name">{{ props.review.business.name }}</p>
@@ -57,7 +45,7 @@
                  class="place-icon"
             />
           </div>
-          <p class="date-review">{{ getReviewDate(props.review.created_at) }}</p>
+          <p class="date-review">{{ props.review.created_at }}</p>
         </div>
         <div>
           <p>{{ props.review.text }}
@@ -68,7 +56,7 @@
         <img @click="showEditMenu = !showEditMenu" :src="getIcon + 'menu-for-review.png'" />
         <div v-if="showEditMenu" class="edit-menu">
           <p @click="place.showEditModal(props.review)">Редактировать</p>
-          <p @click="place.showDeleteModal(props.review.id)">Удалить</p>
+          <p @click="place.showDeleteModal(props.review._id)">Удалить</p>
         </div>
       </div>
     </div>

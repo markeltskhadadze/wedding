@@ -7,9 +7,9 @@
   import { profileData } from '~/stores/profile'
   import { getPath } from '~/mixins/current-url'
   import { screen } from '~/mixins/check-screen'
-  import { onMounted } from 'vue'
+  import { onMounted, toRaw } from 'vue'
   import {authInfo} from "~/stores/auth"
-  import EditReviewModal from "~/components/profile/EditReviewModal.vue";
+  import EditReviewModal from "~/components/profile/EditReviewModal.vue"
 
   const localePath = useLocalePath()
   const auth = authInfo()
@@ -62,10 +62,10 @@
     <div class="flex flex-col flex-[0_1_50%]">
       <p class="setting-title">Настройки</p>
       <Breadcrumbs :currentCategory.sync="profile.currentCategory" />
-      <div class="reviews-data" v-if="profile.getUserReviews.length">
-        <Review v-for="(review, index) in profile.getUserReviews" :key="index" :review="review" />
+      <div class="reviews-data" v-if="profile.reviews.length">
+        <Review v-for="(review, index) in profile.reviews" :key="index"  :review="review" />
       </div>
-      <div class="reviews-data" v-if="!profile.getUserReviews.length">
+      <div class="reviews-data" v-if="!profile.reviews.length">
         <div class="flex flex-col items-center gap-8">
           <img :src="getIcon + 'empty-field.png'" />
           <div class="flex flex-col items-center gap-3">

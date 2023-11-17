@@ -10,18 +10,19 @@ export const placeData = defineStore('placeData', () => {
     const home = homePageData()
     const profile = profileData()
     const comment: Ref<string> = ref('')
-    const newRating: Ref<number> = ref(0)
+    const newRating: Ref<string> = ref('')
     const openDeleModal: Ref<boolean> = ref(false)
     const openEditModal: Ref<boolean> = ref(false)
     let review = ref<TReviewsResult>({
-        assigned_rating: 0,
+        assigned_rating: '',
         created_at: '',
         text: '',
-        user: 0,
-        id: 0,
+        user: {
+            name: ''
+        },
+        _id: '',
         business: {
-            id: 0,
-            rate: 0,
+            _id: '',
             name: '',
             min_value: 0,
             max_value: 0,
@@ -29,15 +30,15 @@ export const placeData = defineStore('placeData', () => {
             district: ''
         }
     })
-    const reviewId: Ref<number> = ref(0)
+    const reviewId: Ref<string> = ref('')
     const auth = authInfo()
-    let placeInfo = reactive<TBusinessReview[]>([])
+    let placeInfo = reactive<TReviewsResult[]>([])
 
     function showReviewModal() {
         showModal.value = !showModal.value
     }
 
-    function showDeleteModal(id: number) {
+    function showDeleteModal(id: string) {
         reviewId.value = id
         openDeleModal.value = !openDeleModal.value
     }
@@ -48,10 +49,9 @@ export const placeData = defineStore('placeData', () => {
             created_at: currentReview.created_at,
             text: currentReview.text,
             user: currentReview.user,
-            id: currentReview.id,
+            _id: currentReview._id,
             business: {
-                id: currentReview.business.id,
-                rate: currentReview.business.rate,
+                _id: currentReview.business._id,
                 name: currentReview.business.name,
                 min_value: currentReview.business.min_value,
                 max_value: currentReview.business.max_value,
@@ -64,28 +64,28 @@ export const placeData = defineStore('placeData', () => {
 
     async function sendReview(id: string) {
         try {
-            const response = await $fetch<TBusinessReview>( 'https://api.talklif.uz/v1/rate/', {
+            const response = await $fetch<TReviewsResult>( 'https://node-and-mongo-project.herokuapp.com/api/add-reviews', {
                 method: 'POST',
                 headers: {
-                    Authorization: "Bearer " + auth.token,
+                    Authorization: auth.token,
                 },
                 body: {
-                    business: id,
+                    businessId: id,
+                    created_at: new Date().toLocaleDateString(),
                     assigned_rating: newRating.value,
                     text: comment.value
                 }
             })
             comment.value = ''
             const newReview = {
-                id: response.id,
                 assigned_rating: response.assigned_rating,
                 user: {
-                    full_name: response.user.full_name
+                    name: response.user.name
                 },
                 text: response.text,
                 created_at: response.created_at
             }
-            placeInfo.push(newReview as TBusinessReview)
+            placeInfo.push(newReview as TReviewsResult)
             showModal.value = false
         } catch (e) {
             console.log(e)
@@ -94,14 +94,13 @@ export const placeData = defineStore('placeData', () => {
 
     async function getReview(id: string) {
         try {
-            const response = await $fetch<TResponseBusinessReview>( `https://api.talklif.uz/v1/public/rate/?business=${id}`, {
+            const response = await $fetch<TReviewsResult[]>( `https://node-and-mongo-project.herokuapp.com/api/reviews/${id}`, {
                 method: 'GET',
                 headers: {
-                    Authorization: "Bearer " + auth.token,
-                    'Accept-Language': home.currentLang
+                    Authorization: auth.token
                 },
             })
-            if(!placeInfo.length) placeInfo.push(...response.results as TBusinessReview[])
+            if(!placeInfo.length) placeInfo.push(...response as TReviewsResult[])
         } catch (e) {
             console.log(e)
         }
@@ -111,15 +110,16 @@ export const placeData = defineStore('placeData', () => {
         return placeInfo
     })
 
-    async function deleteReview(id: number) {
+    async function deleteReview(id: string) {
         try {
-             await $fetch( `https://api.talklif.uz/v1/rate/${reviewId.value}/`, {
+             await $fetch( `https://node-and-mongo-project.herokuapp.com/api/review/${reviewId.value}/`, {
                 method: 'DELETE',
                 headers: {
-                    Authorization: "Bearer " + auth.token,
+                    Authorization: auth.token,
                 },
             })
-            const index = profile.reviews.findIndex((review) => review.id === reviewId.value)
+            const index = profile.reviews.findIndex((review) => review._id === reviewId.value)
+            console.log(index)
             profile.reviews.splice(index, 1)
         } catch (e) {
             console.log(e)
@@ -128,15 +128,15 @@ export const placeData = defineStore('placeData', () => {
 
     async function editReview(review: TReviewsResult) {
         try {
-            const response = await $fetch<TEditReviewResponse>( `https://api.talklif.uz/v1/rate/${review.id}/`, {
+            await $fetch<TEditReviewResponse>( `https://node-and-mongo-project.herokuapp.com/api/review/${review._id}/`, {
                 method: 'PUT',
                 headers: {
-                    Authorization: "Bearer " + auth.token,
+                    Authorization: auth.token,
                 },
                 body: {
                     assigned_rating: newRating.value,
                     text: review.text,
-                    business: review.business.id
+                    business: review.business._id
                 }
             })
             window.location.reload()

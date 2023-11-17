@@ -76,7 +76,7 @@ export const profileData = defineStore('profileData', () => {
                 const response = await $fetch<TImageId>('https://api.talklif.uz/v1/document/file/', {
                     method: 'POST',
                     headers: {
-                        Authorization: "Bearer " + auth.token
+                        Authorization: auth.token
                     },
                     body: formData
                 })
@@ -89,16 +89,16 @@ export const profileData = defineStore('profileData', () => {
 
     async function getReviews() {
         try {
-            const response = await $fetch<TReviews>( 'https://api.talklif.uz/v1/rate/', {
+            const response = await $fetch<TReviewsResult[]>( 'https://node-and-mongo-project.herokuapp.com/api/reviews', {
                 method: 'GET',
                 headers: {
-                    Authorization: "Bearer " + auth.token,
-                    'Accept-Language': home.currentLang
+                    Authorization: auth.token
                 }
             })
             if (!reviews.length) {
-                reviews.push(...response.results as TReviewsResult[])
+                reviews.push(...response as TReviewsResult[])
             }
+            console.log(reviews)
         } catch (e) {
             console.log(e)
         }
@@ -115,6 +115,8 @@ export const profileData = defineStore('profileData', () => {
     })
 
     const getUserReviews = computed(() => {
+        let rev = toRaw(reviews)
+        console.log(reviews.length)
         return reviews
     })
 
