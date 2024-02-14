@@ -1,14 +1,14 @@
-import { defineStore } from 'pinia'
-import {computed, Ref, ref, reactive, watch} from 'vue'
-import { useI18n } from 'vue-i18n'
-import { authInfo } from '~/stores/auth'
-import { registrationModal } from '~/stores/registration-modal'
-import { homePageData } from "~/stores/home-page"
+import {defineStore} from 'pinia'
+import {computed, reactive, ref, Ref, watch} from 'vue'
+import {useI18n} from 'vue-i18n'
+import {authInfo} from '~/stores/auth'
+import {registrationModal} from '~/stores/registration-modal'
+import {homePageData} from "~/stores/home-page"
 import {
-    TAllTasks,
     TAllTasksResult,
     TEditTask,
-    TEvents, TFuncTask,
+    TEvents,
+    TFuncTask,
     TInvitation,
     TInvitedUser,
     TInvitedUserResult,
@@ -65,7 +65,7 @@ export const eventsInfo = defineStore('eventsInfo', () => {
         }
     ]
     const editTaskData = ref<TEditTask>({
-        id: 0,
+        _id: 0,
         date_time: '',
         name: '',
         task_type: 0,
@@ -93,10 +93,10 @@ export const eventsInfo = defineStore('eventsInfo', () => {
     async function createEvent() {
         if (name.value) {
             try {
-                await $fetch('https://api.talklif.uz/v1/event/', {
+                await $fetch('http://localhost:3001/api/events/', {
                     method: 'POST',
                     headers: {
-                        Authorization: "Bearer " + auth.token
+                        Authorization: auth.token,
                     },
                     body: {
                         name: name.value,
@@ -118,14 +118,13 @@ export const eventsInfo = defineStore('eventsInfo', () => {
 
     async function getTasks() {
         try {
-            const response = await $fetch<TAllTasks>( 'https://api.talklif.uz/v1/task/', {
+            const response = await $fetch<TAllTasksResult[]>( 'http://localhost:3001/api/tasks/', {
                 method: 'GET',
                 headers: {
-                    Authorization: "Bearer " + auth.token,
-                    'Accept-Language': home.currentLang
+                    Authorization: auth.token
                 }
             })
-            if (!taskList.length) taskList.push(...response.results as TAllTasksResult[])
+            if (!taskList.length) taskList.push(...response as TAllTasksResult[])
         } catch (e) {
             console.log(e)
         }
@@ -133,11 +132,10 @@ export const eventsInfo = defineStore('eventsInfo', () => {
 
     async function getEvents() {
         try {
-            const response = await $fetch<TEvents[]>( 'https://api.talklif.uz/v1/event/', {
+            const response = await $fetch<TEvents[]>( 'http://localhost:3001/api/events/', {
                 method: 'GET',
                 headers: {
-                    Authorization: "Bearer " + auth.token,
-                    'Accept-Language': home.currentLang
+                    Authorization: auth.token
                 }
             })
             if (!events.length) events.push(...response as TEvents[])
@@ -299,12 +297,12 @@ export const eventsInfo = defineStore('eventsInfo', () => {
         date: string,
         task: TFuncTask
     ) {
-        if(task.id) currentTaskId.value = task.id
+        if(task._id) currentTaskId.value = task._id
         taskName.value = task.name
         eventDate.value = new Date(date)
         editTaskData.value = {
             date_time: date,
-            id: task.id,
+            _id: task._id,
             name: task.name,
             task_type: task.task_type,
             event: task.event,
@@ -330,14 +328,15 @@ export const eventsInfo = defineStore('eventsInfo', () => {
             const taskData: TEditTask = {
                 event: currentEventId.value,
                 name: taskName.value,
-                date_time: eventDate.value.toISOString().slice(0, 19)
+                date_time: eventDate.value.toISOString().slice(0, 19),
+                is_done: false
             }
             if(home.currentBusinessId) taskData.business = home.currentBusinessId
             if(description.value) taskData.description = description.value
-            const response = await $fetch<TEditTask>('https://api.talklif.uz/v1/task/', {
+            const response = await $fetch<TEditTask>('http://localhost:3001/api/tasks/', {
                 method: 'POST',
                 headers: {
-                    Authorization: "Bearer " + auth.token
+                    Authorization: auth.token
                 },
                 body: taskData
             })
@@ -355,17 +354,20 @@ export const eventsInfo = defineStore('eventsInfo', () => {
         try {
             if(taskName.value) editTaskData.value.name = taskName.value
             if(eventDate.value) editTaskData.value.date_time = eventDate.value.toISOString().slice(0, 19)
-            const response = await $fetch<TEditTask>(`https://api.talklif.uz/v1/task/${currentTaskId.value}/`, {
+            if(description.value) editTaskData.value.description = description.value
+            if(home.currentBusinessId) editTaskData.value.business = home.currentBusinessId
+            const response = await $fetch<TEditTask>(`http://localhost:3001/api/tasks/${currentTaskId.value}/`, {
                 method: 'PUT',
                 headers: {
-                    Authorization: "Bearer " + auth.token
+                    Authorization: auth.token
                 },
                 body: editTaskData.value
             })
             modalStep.value = true
             showCreateEventModal.value = false
             registration.showCalendar = false
-            const taskIndex = taskList.findIndex(task => task.id === currentTaskId.value);
+            console.log(taskList)
+            const taskIndex = taskList.findIndex(task => task._id === currentTaskId.value)
             if (taskIndex !== -1) {
                 // @ts-ignore
                 taskList[taskIndex] = response
@@ -377,10 +379,10 @@ export const eventsInfo = defineStore('eventsInfo', () => {
 
     async function changeTask(task: TEditTask, taskDone: boolean) {
         try {
-            const response = await $fetch<TEditTask>(`https://api.talklif.uz/v1/task/${task.id}/`, {
+            const response = await $fetch<TEditTask>(`http://localhost:3001/api/tasks/${task._id}/`, {
                 method: 'PUT',
                 headers: {
-                    Authorization: "Bearer " + auth.token
+                    Authorization: auth.token
                 },
                 body: {
                     event: task.event,
@@ -388,7 +390,7 @@ export const eventsInfo = defineStore('eventsInfo', () => {
                     is_done: taskDone
                 }
             })
-            const taskIndex = taskList.findIndex(existingTask => existingTask.id === task.id)
+            const taskIndex = taskList.findIndex(existingTask => existingTask._id === task._id)
             if (taskIndex !== -1) {
                 // @ts-ignore
                 taskList[taskIndex] = response
@@ -409,8 +411,7 @@ export const eventsInfo = defineStore('eventsInfo', () => {
         const month = String(inputDate.getMonth() + 1).padStart(2, '0')
         const year = inputDate.getFullYear()
 
-        const formattedDate = `${day}.${month}.${year}`
-        return formattedDate
+        return `${day}.${month}.${year}`
     })
 
     return {

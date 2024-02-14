@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import {ref, Ref, onMounted, reactive, toRaw, computed, PropType, watch} from 'vue'
   import ReadyTasksModal from './ReadyTasksModal.vue'
-  import AddNewEvent from '~/components/event-page-parts/AddNewEvent.vue'
   import ChooseVendorModal from '~/components/event-page-parts/ChooseVendorModal.vue'
   import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
   import { ChevronUpDownIcon } from '@heroicons/vue/20/solid'
@@ -62,7 +61,7 @@
     const groupedByDate: any = []
     const filterByDone = selectedTask.value.is_done
     if (filterByDone === undefined) {
-      const fitlerByEvent = taskList.filter(task => task.event === props.currentEvent.id)
+      const fitlerByEvent = taskList.filter(task => task.event === props.currentEvent._id)
       fitlerByEvent.forEach((item) => {
         const date = new Date(item.date_time).toLocaleDateString()
         const index = groupedByDate.findIndex(group => group.date === date)
@@ -74,7 +73,7 @@
       })
       return groupedByDate
     } else {
-      const fitlerByEvent = taskList.filter(task => task.event === props.currentEvent.id)
+      const fitlerByEvent = taskList.filter(task => task.event === props.currentEvent._id)
       const fitlerByStatus = fitlerByEvent.filter(task => task.is_done === filterByDone)
       fitlerByStatus.forEach((item) => {
         const date = new Date(item.date_time).toLocaleDateString()
@@ -90,14 +89,14 @@
   })
 
   async function toggleTaskSelection(task: TEditTask) {
-    if (task.id && event.selectedTasks.includes(task.id)) {
+    if (task._id && event.selectedTasks.includes(task._id)) {
       taskDone.value = false
       if (task) await event.changeTask(task, taskDone.value)
-      event.selectedTasks = event.selectedTasks.filter(id => id !== task.id)
+      event.selectedTasks = event.selectedTasks.filter(id => id !== task._id)
     } else {
       taskDone.value = true
       if (task) await event.changeTask(task, taskDone.value)
-      if(task.id) event.selectedTasks.push(task.id)
+      if(task._id) event.selectedTasks.push(task._id)
     }
   }
 
@@ -106,7 +105,7 @@
   })
 
   function getBusinessName(id: number) {
-    const currentBusiness = allBusiness.filter(business => business.id === id)
+    const currentBusiness = allBusiness.filter(business => business._id === id)
     if(currentBusiness.length) {
       return currentBusiness[0].name
     }
@@ -191,7 +190,7 @@
     </div>
     <hr >
     <div class="add-task">
-      <p @click="event.addTaskModal(currentEvent.id, currentEvent.date)">+ Добавить задачи</p>
+      <p @click="event.addTaskModal(currentEvent._id, currentEvent.date)">+ Добавить задачи</p>
     </div>
     <div>
       <hr />
@@ -201,11 +200,11 @@
           <hr class="w-full" >
         </div>
         <div class="flex flex-col gap-4">
-          <div class="flex gap-4" v-for="(task, index) in group.tasks" :key="index">
+          <div class="flex gap-4 cursor-pointer" v-for="(task, index) in group.tasks" :key="index">
             <div class="flex gap-4 items-center">
               <img
                   @click="toggleTaskSelection(task)"
-                  :src="(task.is_done || isSelected(task.id)) ? getIcon + 'list-event.png' : getIcon + 'empty-selected.png'"
+                  :src="(task.is_done || isSelected(task._id)) ? getIcon + 'list-event.png' : getIcon + 'empty-selected.png'"
               />
               <div @click="event.showEditTaskModal(group.date, task)" class="flex flex-col">
                 <p class="task-name" :class="{ 'selected': task.is_done }">{{ task.name }}</p>
@@ -221,7 +220,6 @@
     </div>
   </div>
   <ReadyTasksModal :currentEvent="currentEvent" />
-  <AddNewEvent v-if="event.showCreateEventModal" />
   <ChooseVendorModal v-if="event.chooseVendor" />
 </template>
 

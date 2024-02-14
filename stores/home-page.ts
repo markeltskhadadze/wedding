@@ -71,7 +71,7 @@ export const homePageData = defineStore('homePageData', () => {
     })
     async function getCategories( ){
         try {
-            const response = await $fetch<TCategoties[]>( 'https://node-and-mongo-project.herokuapp.com/api/category/', {
+            const response = await $fetch<TCategoties[]>( 'http://localhost:3001/api/category/', {
                 method: 'GET'
             })
             if(!categories.length) categories.push(...response)
@@ -117,7 +117,7 @@ export const homePageData = defineStore('homePageData', () => {
                 topPlaces.splice(0, topPlaces.length)
                 topPlaces.push(...response.results as TResultsBusiness[])
             } else {
-                const response = await $fetch<TResultsBusiness[]>('https://node-and-mongo-project.herokuapp.com/api/business/', {
+                const response = await $fetch<TResultsBusiness[]>('http://localhost:3001/api/business/', {
                     method: 'GET',
                     headers: {
                         'Accept-Language': currentLang.value
@@ -185,7 +185,7 @@ export const homePageData = defineStore('homePageData', () => {
     }
     async function getBusinessInfo(id: string){
         try {
-            const response = await $fetch<TBusinessInfo[]>( `https://node-and-mongo-project.herokuapp.com/api/business/${id}`, {
+            const response = await $fetch<TBusinessInfo[]>( `http://localhost:3001/api/business/${id}`, {
                 method: 'GET',
                 headers: {
                     'Accept-Language': currentLang.value

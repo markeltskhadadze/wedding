@@ -28,7 +28,7 @@ export const authInfo = defineStore('authInfo', () => {
 
     async function login (userData: TUserData) {
         try {
-            const result = await $fetch<TUserDataResult>('https://node-and-mongo-project.herokuapp.com/api/login', {
+            const result = await $fetch<TUserDataResult>('http://localhost:3001/api/login', {
                 method: 'POST',
                 body: userData
             })

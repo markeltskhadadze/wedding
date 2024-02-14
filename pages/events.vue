@@ -7,6 +7,7 @@
   import { getImage } from '~/mixins/get-icon'
   import EventTasks from '~/components/event-page-parts/EventTasks.vue'
   import MyTasks from '~/components/event-page-parts/MyTasks.vue'
+  import AddNewEvent from '~/components/event-page-parts/AddNewEvent.vue'
   import { eventsInfo } from '~/stores/events'
   import { authInfo } from "~/stores/auth"
   import { profileData } from '~/stores/profile'
@@ -27,7 +28,7 @@
   let eventsSelected = ref<TEvents[]>([])
   const allInvitation = reactive(toRaw(event.allInvitation))
   const selectedEvents: Ref<TEvents> = ref({
-    id: 0,
+    _id: 0,
     name: '',
     date: ''
   })
@@ -35,7 +36,7 @@
   function getEventName() {
     eventsSelected.value = allUserEvents.map(event => ({
       name: event.name,
-      id: event.id,
+      _id: event._id,
       date: event.date
     }))
 
@@ -63,7 +64,7 @@
   onMounted(async() => {
     auth.setToken(null)
     if(auth.isAuthenticated) {
-      await event.getTasks()
+      // await event.getTasks()
       await event.getEvents()
       await event.getAllInvitation()
       await profile.getProfileInfo()
@@ -171,6 +172,7 @@
           :currentEvent="selectedEvents"
       />
       <InvitePeople />
+      <AddNewEvent v-if="event.showCreateEventModal" />
     </div>
     <DeleteInviteModal />
   </div>

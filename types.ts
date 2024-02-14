@@ -159,7 +159,7 @@ export type TBlogs = {
 }
 
 export type TEvents = {
-    id: number;
+    _id: number;
     name: string;
     date?: string;
 }
@@ -392,7 +392,7 @@ export type TAllTasks = {
 }
 
 export type TAllTasksResult = {
-    id: number;
+    _id: number;
     event: number;
     name: string;
     task_type: null;
@@ -440,10 +440,10 @@ export type TEditTask = {
     business?: number;
     is_done?: boolean;
     description?: string;
-    id?: number;
+    _id?: number;
 }
 
-export type TFuncTask = Pick<TEditTask, 'name' | 'id' | 'task_type' | 'event'| 'business'| 'is_done'>
+export type TFuncTask = Pick<TEditTask, 'name' | '_id' | 'task_type' | 'event'| 'business'| 'is_done'>
 
 export type TBlogsResult = {
     id: number;

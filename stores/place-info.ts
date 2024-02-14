@@ -64,7 +64,7 @@ export const placeData = defineStore('placeData', () => {
 
     async function sendReview(id: string) {
         try {
-            const response = await $fetch<TReviewsResult>( 'https://node-and-mongo-project.herokuapp.com/api/add-reviews', {
+            const response = await $fetch<TReviewsResult>( 'http://localhost:3001/api/add-reviews', {
                 method: 'POST',
                 headers: {
                     Authorization: auth.token,
@@ -94,7 +94,7 @@ export const placeData = defineStore('placeData', () => {
 
     async function getReview(id: string) {
         try {
-            const response = await $fetch<TReviewsResult[]>( `https://node-and-mongo-project.herokuapp.com/api/reviews/${id}`, {
+            const response = await $fetch<TReviewsResult[]>( `http://localhost:3001/api/reviews/${id}`, {
                 method: 'GET',
                 headers: {
                     Authorization: auth.token
@@ -112,7 +112,7 @@ export const placeData = defineStore('placeData', () => {
 
     async function deleteReview(id: string) {
         try {
-             await $fetch( `https://node-and-mongo-project.herokuapp.com/api/review/${reviewId.value}/`, {
+             await $fetch( `http://localhost:3001/api/review/${reviewId.value}/`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: auth.token,
@@ -128,7 +128,7 @@ export const placeData = defineStore('placeData', () => {
 
     async function editReview(review: TReviewsResult) {
         try {
-            await $fetch<TEditReviewResponse>( `https://node-and-mongo-project.herokuapp.com/api/review/${review._id}/`, {
+            await $fetch<TEditReviewResponse>( `http://localhost:3001/api/review/${review._id}/`, {
                 method: 'PUT',
                 headers: {
                     Authorization: auth.token,

@@ -70,7 +70,7 @@ export const businessInfo = defineStore('businessInfo', () => {
     const district: Ref<number> = ref(0)
     async function getUserBusiness() {
         try {
-            const response = await $fetch<TBusinessResult[]>( 'https://node-and-mongo-project.herokuapp.com/api/user-business', {
+            const response = await $fetch<TBusinessResult[]>( 'http://localhost:3001/api/user-business', {
                 method: 'GET',
                 headers: {
                     Authorization: auth.token
@@ -111,7 +111,7 @@ export const businessInfo = defineStore('businessInfo', () => {
                 if(telegram) businessData.telegram = telegram.value
                 if(phoneNumber1) businessData.phone_number1 = phoneNumber1.value.replace(/[\s-]/g, '')
                 if(phoneNumber2) businessData.phone_number2 = phoneNumber2.value.replace(/[\s-]/g, '')
-                await $fetch( 'https://node-and-mongo-project.herokuapp.com/api/add-business', {
+                await $fetch( 'http://localhost:3001/api/add-business', {
                     method: 'POST',
                     headers: {
                         Authorization: auth.token

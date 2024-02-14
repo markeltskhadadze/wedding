@@ -30,7 +30,7 @@ export const profileData = defineStore('profileData', () => {
 
     async function getProfileInfo() {
         try {
-            const response = await $fetch<TProfile>( 'https://node-and-mongo-project.herokuapp.com/api/profile', {
+            const response = await $fetch<TProfile>( 'http://localhost:3001/api/profile', {
                 method: 'GET',
                 headers: {
                     Authorization: auth.token
@@ -48,7 +48,7 @@ export const profileData = defineStore('profileData', () => {
 
     async function saveUserData(userInfo: TProfile) {
         try {
-            await $fetch( `https://node-and-mongo-project.herokuapp.com/api/update/${userInfo._id}`, {
+            await $fetch( `http://localhost:3001/api/update/${userInfo._id}`, {
                 method: 'POST',
                 headers: {
                     Authorization: auth.token,
@@ -89,7 +89,7 @@ export const profileData = defineStore('profileData', () => {
 
     async function getReviews() {
         try {
-            const response = await $fetch<TReviewsResult[]>( 'https://node-and-mongo-project.herokuapp.com/api/reviews', {
+            const response = await $fetch<TReviewsResult[]>( 'http://localhost:3001/api/reviews', {
                 method: 'GET',
                 headers: {
                     Authorization: auth.token

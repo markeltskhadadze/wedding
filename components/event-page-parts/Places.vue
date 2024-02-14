@@ -37,7 +37,7 @@
       </div>
       <div class="place-info">
         <div class="flex justify-between items-center gap-2">
-          <NuxtLink :to="localePath`/${ place.id }`" class="place-name">{{ place.name }}</NuxtLink>
+          <NuxtLink :to="localePath`/${ place._id }`" class="place-name">{{ place.name }}</NuxtLink>
           <div class="flex gap-1 items-center">
             <img :src="getIcon + 'star.png'" class="place-icon" />
             <p class="rating-value">{{ place?.rate }}</p>
@@ -50,11 +50,11 @@
         <p class="price">От {{ place.price }} UZS</p>
       </div>
     </div>
-    <div :class="{ 'selected': homeData.selectedPlacesId.includes(place.id) }">
-      <img v-if="homeData.selectedPlacesId.includes(place.id)" :src="getIcon + 'selected-Icon.png'" />
+    <div :class="{ 'selected': homeData.selectedPlacesId.includes(place._id) }">
+      <img v-if="homeData.selectedPlacesId.includes(place._id)" :src="getIcon + 'selected-Icon.png'" />
       <button
           v-if="checkScreen"
-          @click="selectPlace(place.name, place.id)"
+          @click="selectPlace(place.name, place._id)"
           class="select-place">{{ $t('register_modal.select_profile') }}
       </button>
     </div>
